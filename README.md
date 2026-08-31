@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# infini.io
 
-## Getting Started
+Swiss-style black & white marketing site + admin panel. Built with Next.js 16 (App Router), TypeScript, shadcn/ui (Tailwind v4), and Supabase.
 
-First, run the development server:
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # then fill in your Supabase values
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Supabase project
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Create a project at [supabase.com](https://supabase.com).
+2. Copy `NEXT_PUBLIC_SUPABASE_URL` and the publishable (anon) key from **Settings → API** into `.env.local`.
+3. Run the schema + RLS migration in `supabase/migrations/20260828000000_infini_schema.sql` (or `supabase db push`).
+4. In **Authentication → Users**, invite `ntaravindnarayanan7@gmail.com` and set a password — that's the only account allowed into `/admin`.
+5. Public form submissions (consult + waitlist) work immediately via RLS; the admin CRUD works once signed in.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Run it
 
-## Learn More
+- Public site: `/` (hero, services, products, work, why, consult)
+- Admin: `/admin` — Projects manager, Consult Requests inbox, Product Waitlist
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Optional — new-lead email notifications
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Deploy `supabase/functions/notify-new-lead` and add a **Database Webhook** on `consult_requests` (INSERT). Set a `RESEND_API_KEY` secret and it emails `ntaravindnarayanan7@gmail.com` on every enquiry.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Section map (copy in `prompts/infinio-site-spec.md`)
 
-## Deploy on Vercel
+| Section | Route / anchor |
+|---|---|
+| Hero, Services, Work, Why | `app/page.tsx` |
+| Products (waitlist) | `#products` |
+| Consult form | `#consult` |
+| Admin | `/admin` |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Image slots are marked `<!-- ... PLACEHOLDER -->` throughout — drop real assets in with no code changes required for inline placeholders in the hero.# infini
