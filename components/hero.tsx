@@ -3,25 +3,6 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Reveal } from "@/components/reveal"
 
-function ImageSlot({
-  label,
-  className,
-}: {
-  label: string
-  className?: string
-}) {
-  return (
-    <div className={className}>
-      {/* REPLACE WITH REAL PORTFOLIO/BRAND IMAGE — this is only the placeholder */}
-      <div className="flex aspect-[4/3] w-full items-center justify-center border border-black">
-        <p className="px-6 text-center text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          {label}
-        </p>
-      </div>
-    </div>
-  )
-}
-
 export function Hero() {
   return (
     <section id="top" className="relative flex min-h-[85svh] flex-col justify-between overflow-hidden bg-white">
@@ -70,27 +51,6 @@ export function Hero() {
             >
               <Link href="#work">See Our Work</Link>
             </Button>
-          </div>
-        </Reveal>
-
-        <Reveal delay={320}>
-          <div className="mt-24 grid gap-px border border-black bg-black md:mt-32 md:grid-cols-2">
-            <div className="bg-background p-3">
-              {/* HERO ECOMMERCE IMAGE */}
-              <ImageSlot label="Ecommerce" />
-              <p className="flex items-baseline justify-between border-t border-black pt-4 text-sm">
-                <span className="font-semibold tracking-tight">Ecommerce</span>
-                <span className="text-muted-foreground tabular-nums">01</span>
-              </p>
-            </div>
-            <div className="bg-background p-3">
-              {/* HERO AI IMAGE */}
-              <ImageSlot label="AI Agents" />
-              <p className="flex items-baseline justify-between border-t border-black pt-4 text-sm">
-                <span className="font-semibold tracking-tight">AI Agents</span>
-                <span className="text-muted-foreground tabular-nums">02</span>
-              </p>
-            </div>
           </div>
         </Reveal>
       </div>

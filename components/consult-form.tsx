@@ -30,7 +30,9 @@ import { cn } from "@/lib/utils"
 
 const consultSchema = z.object({
   name: z.string().min(1, "Please tell us your name."),
-  email: z.string().email("Please enter a valid email."),
+  phone: z
+    .string()
+    .regex(/^[+]?[\d\s().-]{7,20}$/, "Please enter a valid phone number."),
   service: z.string().min(1, "Please choose a service."),
   budget: z.string().min(1, "Please choose a budget range."),
   message: z.string().optional(),
@@ -40,7 +42,7 @@ type ConsultValues = z.infer<typeof consultSchema>
 
 const DEFAULT_VALUES: ConsultValues = {
   name: "",
-  email: "",
+  phone: "",
   service: "",
   budget: "",
   message: "",
@@ -59,7 +61,7 @@ export function ConsultForm() {
     const supabase = createClient()
     const { error } = await supabase.from("consult_requests").insert({
       name: values.name.trim(),
-      email: values.email.trim().toLowerCase(),
+      phone: values.phone.trim(),
       service: values.service,
       budget: values.budget,
       message: values.message?.trim() || null,
@@ -109,18 +111,18 @@ export function ConsultForm() {
 
         <FormField
           control={form.control}
-          name="email"
+          name="phone"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-sm font-medium text-white/80">
-                Email
+                Phone
               </FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  type="email"
-                  placeholder="you@company.com"
-                  autoComplete="email"
+                  type="tel"
+                  placeholder="+91 98765 43210"
+                  autoComplete="tel"
                   className="h-12 rounded-none border-white/30 bg-black/80 px-4 text-white placeholder:text-white/40 focus-visible:border-white aria-invalid:border-red-400"
                 />
               </FormControl>

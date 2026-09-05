@@ -17,14 +17,14 @@ serve(async (req) => {
     return new Response("Method not allowed", { status: 405 })
   }
 
-  const { email, name, service, budget, message } = await req.json().catch(() => ({}))
+  const { phone, name, service, budget, message } = await req.json().catch(() => ({}))
 
-  if (!email || !name || !service || !budget) {
+  if (!phone || !name || !service || !budget) {
     return new Response("Missing lead fields", { status: 400 })
   }
 
   if (!RESEND_API_KEY) {
-    console.log("RESEND_API_KEY not set — skipping email. Lead:", { email, name })
+    console.log("RESEND_API_KEY not set — skipping email. Lead:", { phone, name })
     return new Response("No RESEND_API_KEY — skipped", { status: 200 })
   }
 
@@ -34,7 +34,7 @@ serve(async (req) => {
     subject: `New enquiry — ${name}`,
     text: [
       `Name: ${name}`,
-      `Email: ${email}`,
+      `Phone: ${phone}`,
       `Service: ${service}`,
       `Budget: ${budget}`,
       "",

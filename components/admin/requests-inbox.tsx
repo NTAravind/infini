@@ -67,7 +67,7 @@ export function RequestsInbox({ initialRequests }: RequestsInboxProps) {
           <TableHeader>
             <TableRow className="border-black bg-muted">
               <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
+              <TableHead>Phone</TableHead>
               <TableHead>Service</TableHead>
               <TableHead>Budget</TableHead>
               <TableHead>Message</TableHead>
@@ -86,14 +86,7 @@ export function RequestsInbox({ initialRequests }: RequestsInboxProps) {
               requests.map((request) => (
                 <TableRow key={request.id} className="border-black align-top">
                   <TableCell className="font-medium">{request.name}</TableCell>
-                  <TableCell>
-                    <a
-                      href={`mailto:${request.email}`}
-                      className="underline underline-offset-2"
-                    >
-                      {request.email}
-                    </a>
-                  </TableCell>
+                  <TableCell className="whitespace-nowrap">{request.phone}</TableCell>
                   <TableCell>{request.service}</TableCell>
                   <TableCell className="whitespace-nowrap">{request.budget}</TableCell>
                   <TableCell className="max-w-xs text-muted-foreground">

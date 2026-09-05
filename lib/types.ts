@@ -27,7 +27,7 @@ export type ConsultStatus = (typeof CONSULT_STATUSES)[number]
 export type ConsultRequest = {
   id: string
   name: string
-  email: string
+  phone: string
   service: string
   budget: string
   message: string | null

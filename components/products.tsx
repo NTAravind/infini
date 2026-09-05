@@ -6,7 +6,7 @@ import { WaitlistForm } from "@/components/waitlist-form"
 const PRODUCTS = [
   {
     index: "01",
-    name: "WhatsApp AI Agent",
+    name: "WhataAI",
     tag: "Coming Soon",
     description:
       "A multi-tenant WhatsApp AI agent platform for businesses — automated customer support, sales, and bookings, right inside WhatsApp. Currently in development.",
@@ -30,9 +30,9 @@ export function Products() {
           />
         </Reveal>
 
-        <div className="mt-14 grid gap-px border border-white/15 bg-white/15 md:mt-20 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid grid-cols-1 gap-px border border-white/15 bg-white/15 md:mt-20 md:grid-cols-[repeat(auto-fit,minmax(22rem,1fr))]">
           {PRODUCTS.map((product) => (
-            <Reveal key={product.index} delay={100}>
+            <Reveal key={product.index} delay={100} className="h-full">
               <article className="flex h-full flex-col bg-black p-8 md:p-10">
                 <div className="flex items-start justify-between">
                   <p className="text-sm text-white/40 tabular-nums">

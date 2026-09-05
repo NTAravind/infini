@@ -20,7 +20,7 @@ create table if not exists public.projects (
   created_at timestamptz default now()
 );
 
--- Product waitlist ("Notify Me" — WhatsApp AI Agent, coming soon)
+-- Product waitlist ("Notify Me" — WhataAI, coming soon)
 create table if not exists public.product_waitlist (
   id uuid primary key default gen_random_uuid(),
   email text not null,
@@ -32,7 +32,7 @@ create table if not exists public.product_waitlist (
 create table if not exists public.consult_requests (
   id uuid primary key default gen_random_uuid(),
   name text not null,
-  email text not null,
+  phone text not null,
   service text not null,
   budget text not null,
   message text,

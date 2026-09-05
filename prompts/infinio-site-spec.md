@@ -100,7 +100,7 @@ Distinct from the "What We Build" services list — this is for infini.io's own 
 **Section title:** `Our Products`
 **Subtitle:** `Built by infini.io, for businesses like yours.`
 
-**01 — WhatsApp AI Agent** — `Coming Soon`
+**01 — WhataAI** — `Coming Soon`
 A multi-tenant WhatsApp AI agent platform for businesses — automated customer support, sales, and bookings, right inside WhatsApp. Currently in development.
 
 - Show a `Coming Soon` shadcn `Badge` next to the product name (outline style, not filled — keep it low-key on the black/white palette)
@@ -216,7 +216,7 @@ create table projects (
   created_at timestamptz default now()
 );
 
--- Product waitlist (e.g. "Notify Me" on WhatsApp AI Agent — Coming Soon)
+-- Product waitlist (e.g. "Notify Me" on WhataAI — Coming Soon)
 create table product_waitlist (
   id uuid primary key default gen_random_uuid(),
   email text not null,
@@ -228,7 +228,7 @@ create table product_waitlist (
 create table consult_requests (
   id uuid primary key default gen_random_uuid(),
   name text not null,
-  email text not null,
+  phone text not null,
   service text not null,
   budget text not null,
   message text,
