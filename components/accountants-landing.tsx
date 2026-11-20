@@ -25,6 +25,7 @@ export function AccountantsLanding() {
   const monthlyHours = staff * hours * 4.33
   const monthlyCost = monthlyHours * rate
   const potentialHours = monthlyHours * 0.5
+  const inputClass = "h-12 rounded-none border-black/20 bg-white px-4 focus-visible:border-black"
 
   return <main className="flex-1">
     <section id="top" className="border-b border-black/10 px-5 pb-20 pt-36 md:px-8 md:pb-28 md:pt-48">
