@@ -5,6 +5,7 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { ChevronDown } from "lucide-react"
 
 const NAV_LINKS = [
   { label: "Websites", href: "#services" },
@@ -39,6 +40,14 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
+            <div className="group relative flex h-full items-center">
+              <button type="button" className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-widest text-gray-500 transition-colors hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black" aria-haspopup="true">
+                AI Automations <ChevronDown size={14} />
+              </button>
+              <div className="invisible absolute left-0 top-full min-w-48 border border-gray-100 bg-white p-2 opacity-0 shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <Link href="/automations/accountants" className="block px-4 py-3 text-xs font-semibold uppercase tracking-widest text-gray-600 hover:bg-gray-50 hover:text-black">Accountants</Link>
+              </div>
+            </div>
           </nav>
 
           {/* Spacer for flex-1 on mobile so logo stays left */}
@@ -97,6 +106,10 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
+          <div className="border-b border-gray-100 py-5">
+            <p className="mb-3 text-sm font-bold uppercase tracking-widest text-black">AI Automations</p>
+            <Link href="/automations/accountants" onClick={() => setOpen(false)} className="block pl-10 text-lg font-medium text-gray-600">Accountants</Link>
+          </div>
           <Button
             asChild
             className="mt-8 h-14 rounded-none bg-black text-sm font-bold uppercase tracking-widest text-white hover:bg-black/90"

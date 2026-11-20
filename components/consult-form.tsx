@@ -30,6 +30,9 @@ import { cn } from "@/lib/utils"
 
 const consultSchema = z.object({
   name: z.string().min(1, "Please tell us your name."),
+  firmName: z.string().optional(),
+  email: z.string().email("Please enter a valid email.").optional().or(z.literal("")),
+  staffCount: z.string().optional(),
   phone: z
     .string()
     .regex(/^[+]?[\d\s().-]{7,20}$/, "Please enter a valid phone number."),
@@ -48,12 +51,12 @@ const DEFAULT_VALUES: ConsultValues = {
   message: "",
 }
 
-export function ConsultForm() {
+export function ConsultForm({ initialService }: { initialService?: string } = {}) {
   const [submitting, setSubmitting] = useState(false)
 
   const form = useForm<ConsultValues>({
     resolver: zodResolver(consultSchema),
-    defaultValues: DEFAULT_VALUES,
+    defaultValues: { ...DEFAULT_VALUES, service: initialService ?? "" },
   })
 
   async function onSubmit(values: ConsultValues) {
@@ -61,6 +64,9 @@ export function ConsultForm() {
     const supabase = createClient()
     const { error } = await supabase.from("consult_requests").insert({
       name: values.name.trim(),
+      firm_name: values.firmName?.trim() || null,
+      work_email: values.email?.trim() || null,
+      staff_count: values.staffCount ? Number(values.staffCount) : null,
       phone: values.phone.trim(),
       service: values.service,
       budget: values.budget,
@@ -74,7 +80,7 @@ export function ConsultForm() {
     }
 
     toast("Thanks — we'll be in touch within 24 hours.")
-    form.reset(DEFAULT_VALUES)
+    form.reset({ ...DEFAULT_VALUES, service: initialService ?? "" })
   }
 
   const selectClass = cn(
@@ -131,6 +137,18 @@ export function ConsultForm() {
           )}
         />
 
+        {initialService && <>
+          <FormField control={form.control} name="firmName" render={({ field }) => (
+            <FormItem><FormLabel className="text-sm font-medium text-white/80">Firm name</FormLabel><FormControl><Input {...field} required placeholder="Your firm" className="h-12 rounded-none border-white/30 bg-black/80 px-4 text-white placeholder:text-white/40 focus-visible:border-white" /></FormControl><FormMessage className="text-red-400" /></FormItem>
+          )} />
+          <FormField control={form.control} name="email" render={({ field }) => (
+            <FormItem><FormLabel className="text-sm font-medium text-white/80">Work email</FormLabel><FormControl><Input {...field} type="email" required placeholder="you@firm.in" autoComplete="email" className="h-12 rounded-none border-white/30 bg-black/80 px-4 text-white placeholder:text-white/40 focus-visible:border-white" /></FormControl><FormMessage className="text-red-400" /></FormItem>
+          )} />
+          <FormField control={form.control} name="staffCount" render={({ field }) => (
+            <FormItem><FormLabel className="text-sm font-medium text-white/80">Number of staff</FormLabel><FormControl><Input {...field} type="number" min="1" required placeholder="e.g. 5" className="h-12 rounded-none border-white/30 bg-black/80 px-4 text-white placeholder:text-white/40 focus-visible:border-white" /></FormControl><FormMessage className="text-red-400" /></FormItem>
+          )} />
+        </>}
+
         <FormField
           control={form.control}
           name="service"
@@ -152,7 +170,7 @@ export function ConsultForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className="rounded-none border-white/30 bg-black text-white">
-                  {SERVICE_OPTIONS.map((option) => (
+                  {[...SERVICE_OPTIONS, ...(initialService && !SERVICE_OPTIONS.includes(initialService as typeof SERVICE_OPTIONS[number]) ? [initialService] : [])].map((option) => (
                     <SelectItem key={option} value={option} className="focus:bg-white/15 focus:text-white">
                       {option}
                     </SelectItem>
